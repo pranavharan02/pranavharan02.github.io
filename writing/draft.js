@@ -20,7 +20,7 @@
     {label: "early 2026 · claude · opus 4.6", models: [],
      text: ["switched to claude in the beginning of 2026- opus 4.6 was the first model which blew me away and made me seriously switch.",
             "though my initial usage with opus 4.6 was for knowledge work- decks and memos, i started experimenting and building little things."]},
-    {label: "artifacts → claude code", models: ["sonnet 4.6", "opus 4.6", "opus 4.7", "opus 4.8", null],
+    {label: "artifacts → claude code", models: ["opus + sonnet 4.6", "sonnet 4.6", "opus 4.6", "opus 4.7", "opus 4.8", null],
      text: ["claude artifacts was the gateway. claude code got me hooked."]},
     {label: "mid 2026 · fable", models: ["fable 5", "fable 5.1", "opus 5"],
      text: ["on models post 4.6- the peak model for me was fable; was such a fable-maxi until opus 5.5 came out."]},
@@ -36,7 +36,7 @@
 
   const sections = [
     {id: "built", name: "built", items: [
-      E("mumbairents", "mumbairents.com", "2026.04", "sonnet 4.6",
+      E("mumbairents", "mumbairents.com", "2026.04", "opus + sonnet 4.6",
         "a public good for rent transparency in mumbai; anyone can come and pin how much they're paying in rent on a map-like interface. you can explore what people are paying from the pins.",
         {numbers: "some numbers: 20k+ visits, 650+ users", live: "https://www.mumbairents.com",
          media: [["mr-stage-apr19-welcome.jpg", "19 apr 2026"], ["mr-stage-apr19-map.jpg", "19 apr 2026"], ["mumbai-rents.jpg", "4 oct 2026"]]}),
@@ -73,7 +73,6 @@
       E("idea-engine", "idea engine", "2026.09", "fable 5.1", "every night it reads hn, reddit, youtube and substacks, and leaves me a brief of ideas worth building.",
         {note: "still WIP", media: ["idea-engine.jpg"]}),
       E("laptop-control", "laptop control center", "2026.09", "opus 5.5", "a control panel for my laptop: it watches cpu, fans, battery and both gpus, explains every problem in a sentence, and switches between four power modes, from overdrive to cool & quiet."),
-      E("anime-matrix", "anime matrix", "2026.09", "opus 5.5", "my own driver and dashboard for the led dot-matrix on my laptop lid."),
       E("claude-micro", "claude micro", "2026.10", "opus 5.5", "a retro android handheld turned into a remote for my claude code sessions."),
     ]},
     {id: "repos", name: "public repos", list: true, items: [
