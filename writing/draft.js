@@ -70,14 +70,10 @@
     ]},
     {id: "personal", name: "personal builds", items: [
       E("the-vault", "the vault", "2026.04", "opus 4.6", "years of notes, chats and whatsapp exports, tagged by an llm into a 2,124-note linked obsidian vault."),
-      G("tracking", "keeping track of multiple things i'm working on", null, [
-        E("command-centre", "command centre", "2026.04", "opus 4.6", "my first personal dashboard: weather, markets, news and a project tracker. it died because it needed feeding."),
-        E("observatory", "observatory", "2026.07", "fable 5", "command centre's successor: it reads my claude sessions, so i never have to type into it."),
-      ]),
       E("idea-engine", "idea engine", "2026.09", "fable 5.1", "every night it reads hn, reddit, youtube and substacks, and leaves me a brief of ideas worth building.",
         {note: "still WIP", media: ["idea-engine.jpg"]}),
       E("laptop-control", "laptop control center", "2026.09", "opus 5.5", "a control panel for my laptop: it watches cpu, fans, battery and both gpus, explains every problem in a sentence, and switches between four power modes, from overdrive to cool & quiet."),
-      E("anime-matrix", "anime matrix", "2026.09", "opus 5.5", "my own driver and dashboard for the led dot-matrix on my laptop lid.", {media: ["anime-matrix.gif"], pixel: true}),
+      E("anime-matrix", "anime matrix", "2026.09", "opus 5.5", "my own driver and dashboard for the led dot-matrix on my laptop lid."),
       E("claude-micro", "claude micro", "2026.10", "opus 5.5", "a retro android handheld turned into a remote for my claude code sessions."),
     ]},
     {id: "repos", name: "public repos", list: true, items: [
@@ -88,8 +84,8 @@
       R("map-to-explorable-world", "2026.10", "the engine behind kumbalangi, with a live demo.", {see: "explorable-world"}),
     ]},
     {id: "ideas", name: "ideas half explored", items: [
-      E("turing-test", "turing test", "2026.04", null, "chat with a stranger for 90 seconds, then guess: human or bot.", {media: ["turing-test.jpg"]}),
-      E("point-me-to", "point me to", "2026.06", "opus 4.6", "a compass with no map: pick café or pharmacy, and a needle points to the nearest one.", {media: ["point-me-to.jpg"]}),
+      E("turing-test", "turing test", "2026.04", null, "chat with a stranger for 90 seconds, then guess: human or bot."),
+      E("point-me-to", "point me to", "2026.06", "opus 4.6", "a compass with no map: pick café or pharmacy, and a needle points to the nearest one."),
     ]},
   ];
 
