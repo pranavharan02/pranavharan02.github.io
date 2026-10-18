@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hi. i'm pranav</title>
+<meta name="description" content="Pranav's experiments with ai: things built with claude in 2026.">
+<style>
+/* after patrickcollison.com/fast: Helvetica, quiet blue links, a bold name then a paragraph.
+   left margin: his claude story as a timeline; right margin: an outline that follows the scroll */
+:root{--ink:#111;--text:#333;--muted:#888;--rule:#eee;--link:#0864c7;--red:#d0021b;--green:#2f7d4f;--line:#e6e6e6;--dot:#c9d8ea}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:24px}
+body{margin:0;background:#fff;color:var(--text);font:15px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif}
+a,a:visited{color:var(--link)}
+.page{display:grid;grid-template-columns:220px minmax(0,640px) 200px;gap:40px;justify-content:center;padding:40px 16px 180px}
+
+/* left: the claude story */
+.eras{position:sticky;top:28px;max-height:calc(100vh - 56px);overflow:auto;scrollbar-width:thin;padding-right:4px}
+.eras .title{font-size:13px;color:var(--ink);margin:2px 0 14px}
+.eralist{border-left:2px solid var(--line);padding-left:16px}
+.era{position:relative;margin:0 0 18px;font-size:13px;transition:opacity .25s}
+.era::before{content:"";position:absolute;left:-22px;top:5px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--dot);transition:background .25s,border-color .25s}
+.era b{display:block;color:var(--ink);font-size:12.5px;font-weight:600}
+.era .t{display:block;color:#777;line-height:1.5;margin-top:2px}
+.era.on::before{background:var(--link);border-color:var(--link)}
+.era.on b{color:var(--link)}
+.tracking .era:not(.on){opacity:.55}
+
+/* middle */
+.menu-m{display:none;font-size:13px;margin-bottom:18px}
+.menu-m a{margin-right:14px;text-decoration:none}
+h1{font:500 28px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);margin:0 0 14px}
+p{margin:0 0 1em}
+.about{font-size:16.5px;color:var(--ink)}
+.eras-m{display:none}
+h2.sec{font:500 21px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);margin:2.4em 0 0;padding-top:.9em;border-top:1px solid #e8e8e8}
+.group{margin-top:1.9em}
+.group>h3{font:600 16px/1.3 "Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink);margin:0}
+.group>.gdesc{font-size:14px;color:#666;margin:2px 0 0}
+.gbody{border-left:2px solid #ececec;padding-left:18px;margin-top:4px}
+.gbody>.entry:first-child{padding-top:1em}
+.kids{border-left:2px dotted #dcdcdc;padding-left:16px;margin:4px 0 0 2px}
+.entry{padding-top:1.6em}
+.entry p{margin:0}
+.entry b.n{color:var(--ink)}
+.nums{display:block;font-size:14px;color:#555;margin-top:6px}
+.note{display:inline-block;font-size:12.5px;color:#9a5a00;background:#fff3df;border-radius:3px;padding:1px 7px;margin-top:6px}
+.meta{display:block;font-size:12.5px;color:#999;margin-top:4px}
+.entry.solo{display:grid;grid-template-columns:minmax(0,1fr) 210px;column-gap:22px;align-items:start}
+.solo .media img{width:100%;height:auto;max-height:240px;object-fit:cover;object-position:top;display:block;border:1px solid var(--rule);background:#f2f2f2}
+.strip{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px;margin-top:12px}
+.strip figure,.solo figure{margin:0}
+.strip img,.strip video{width:100%;height:auto;aspect-ratio:var(--ar,16/10);object-fit:cover;display:block;border:1px solid var(--rule);background:#f2f2f2}
+.strip a,.solo .media a{display:block}
+figcaption{font-size:11.5px;color:#999;margin-top:4px}
+img.pixel{image-rendering:pixelated;background:#000!important;object-fit:contain!important}
+video{cursor:pointer}
+.repos{list-style:none;padding:0;margin:.5em 0 0}
+.repos li.entry{padding:.75em 0;border-bottom:1px solid #f3f3f3}
+.repos .rn{font-weight:600}
+.repos .rw{font-size:12.5px;color:#999;margin-left:8px}
+.repos .see{font-size:12.5px;margin-left:8px;text-decoration:none}
+.repos .line{display:block;margin-top:2px}
+footer{margin-top:3.5em;padding-top:1em;border-top:1px solid var(--rule);font-size:13px;color:#777}
+.ph{color:#aaa;font-style:italic}
+.nowbar{display:none}
+
+/* right: menu, then an outline that follows the scroll */
+.side{font-size:13px}
+.sidestick{position:sticky;top:28px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 56px)}
+.menu{text-align:right;margin:2px 0 4px;flex:none}
+.menu a{margin-left:14px;text-decoration:none}
+.ol{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;border-left:2px solid var(--line);padding:0 0 0 14px}
+.ol .sh{position:relative;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#999;margin:16px 0 3px}
+.ol .sh:first-child{margin-top:2px}
+.ol .sh::before{content:"";position:absolute;left:-20px;top:3px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--dot)}
+.ol .sh.on{color:var(--ink)}
+.ol .sh.on::before{background:var(--link);border-color:var(--link)}
+.ol .gh{font-size:12px;font-weight:600;color:#555;margin:6px 0 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ol a{display:flex;justify-content:space-between;gap:8px;color:#777;text-decoration:none;line-height:1.6}
+.ol a span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ol a .w{flex:none;color:#bbb;font-size:11px}
+.ol a.d1{padding-left:9px} .ol a.d2{padding-left:18px}
+.ol a:hover{color:var(--link)}
+.ol a.on{color:var(--ink);font-weight:600}
+.ol a.on .w{color:var(--link)}
+
+/* red: Claude's suggestions, waiting for a yes or no */
+.ed{cursor:pointer;border-radius:2px}
+.ed:hover{background:#fdecee}
+.ed del{color:var(--red);text-decoration:line-through;text-decoration-thickness:1.5px}
+.ed ins{color:var(--red);text-decoration:none}
+.ed.add ins{border-bottom:1px dashed rgba(208,2,27,.45)}
+.ed sup{font:700 9.5px/1 system-ui,sans-serif;color:#fff;background:var(--red);border-radius:7px;padding:1px 4px;margin-left:2px;vertical-align:3px}
+.ed.accept sup{background:var(--green)}
+.ed.reject sup{background:#9a9a9a}
+.ed.accept .fin{text-decoration:underline dotted var(--green);text-decoration-thickness:2px;text-underline-offset:3px}
+.ed.reject .fin{text-decoration:underline dotted #bbb;text-decoration-thickness:2px;text-underline-offset:3px}
+.ed:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+.review{position:fixed;right:16px;bottom:16px;z-index:30;width:310px;background:#fff;border:1px solid #ddd;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.12);font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:#333;padding:12px 14px}
+.review.docked{position:static;width:auto;box-shadow:none;border-radius:4px;padding:10px 12px;flex:none}
+.review.docked .row button{padding:6px 8px;font-size:12px}
+.review .hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.review .hd b{color:var(--red)}
+.review .hd button{border:0;background:none;font-size:16px;line-height:1;color:#999;cursor:pointer;padding:2px 4px}
+.review .body{margin-top:6px}
+.review .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.review .row button{font:600 12.5px system-ui,sans-serif;padding:7px 9px;border:1px solid #ddd;border-radius:4px;background:#fff;color:#222;cursor:pointer}
+.review .row button.dark{background:#111;border-color:#111;color:#fff}
+.review textarea{display:none;width:100%;height:76px;margin-top:8px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;border:1px solid #ddd;border-radius:4px;padding:6px}
+.review textarea.show{display:block}
+.review.min .body{display:none}
+
+@media (max-width:1179px){
+  .page{grid-template-columns:210px minmax(0,640px);gap:36px}
+  .side{display:none}
+  .menu-m{display:block}
+  .nowbar{display:block;position:sticky;top:0;z-index:5;margin:0 -2px;padding:8px 2px;background:#fff;border-bottom:1px solid var(--rule);font-size:13px;color:#777;visibility:hidden;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nowbar.show{visibility:visible}
+  .nowbar b{color:var(--ink)}
+}
+@media (max-width:899px){
+  .page{grid-template-columns:minmax(0,1fr);max-width:640px;margin:0 auto;padding-top:28px}
+  .gutter{display:none}
+  .eras-m{display:block;margin:1.4em 0 0}
+  .eras-m .eras{position:static;max-height:none;overflow:visible}
+}
+@media (max-width:560px){
+  .entry.solo{grid-template-columns:minmax(0,1fr) 120px;column-gap:14px}
+  .gbody{padding-left:12px} .kids{padding-left:10px}
+  .strip{gap:5px}
+}
+@media (max-width:700px){.review{left:8px;right:8px;width:auto;bottom:8px}}
+.review{display:none!important}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+  <aside class="gutter" aria-label="On my relationship with claude"><div class="eras" id="eras"></div></aside>
+  <main>
+    <nav class="menu-m" aria-label="Site"><a href="#top">about</a><a href="#work">work</a><a href="#contact">contact</a></nav>
+    <div id="head"></div>
+    <div class="eras-m"><div class="eras" id="erasM"></div></div>
+    <div class="nowbar" id="nowbar" aria-hidden="true"></div>
+    <div id="work"></div>
+    <footer id="contact"><a href="https://github.com/pranavharan02">github</a> · <a href="mailto:reachpranavharan@gmail.com">reachpranavharan@gmail.com</a></footer>
+  </main>
+  <aside class="side">
+    <div class="sidestick" id="sidestick">
+      <nav class="menu" aria-label="Site"><a href="#top">about</a><a href="#work">work</a><a href="#contact">contact</a></nav>
+      <nav class="ol" id="ol" aria-label="Outline"></nav>
+    </div>
+  </aside>
+</div>
+
+<div class="review" id="review" aria-label="Review">
+  <div class="hd"><span><b>red</b> = my suggestions · <span id="cnt"></span></span><button id="min" aria-label="Minimise">–</button></div>
+  <div class="body">
+    Click red text to accept it; click again to keep your words; once more to undo. Grey brackets are for you to write.
+    <div class="row">
+      <button id="all" class="dark">Accept all</button>
+      <button id="prev">Preview</button>
+      <button id="copy">Copy my decisions</button>
+      <button id="reset">Reset</button>
+    </div>
+    <textarea id="out" readonly aria-label="Your decisions"></textarea>
+  </div>
+</div>
+
+<script src="writing/draft.js"></script>
+<script src="assets/thumbs/sizes.js"></script>
+<script>
+const D = DRAFT, {esc} = D, $ = id => document.getElementById(id);
+let dec = D.decisions(), preview = false;
+const MONTHS = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+const month = w => { const [y, m] = w.split("."); return `${MONTHS[m - 1]} ${y}`; };
+const mon = w => MONTHS[w.split(".")[1] - 1];
+
+// display numbers follow reading order: about, the claude story, then every section top to bottom
+const ORDER = [];
+ORDER.push(...D.ids(D.top.about));
+D.eras.forEach(e => ORDER.push(...D.ids(e.label), ...e.text.flatMap(D.ids)));
+const orderOf = it => {
+  if (it.group) { ORDER.push(...D.ids(it.name), ...D.ids(it.what)); it.items.forEach(orderOf); return; }
+  ORDER.push(...D.ids(it.what)); (it.kids || []).forEach(orderOf);
+};
+D.sections.forEach(s => s.items.forEach(orderOf));
+const num = id => ORDER.indexOf(id) + 1;
+const state = id => dec[id] || "pending";
+
+function marked(s, emptyLabel = "[ your words ]") {
+  if (s == null) return "";
+  if (preview) return esc(D.text(s, "suggested", dec));
+  let out = "", last = 0;
+  for (const m of s.matchAll(D.RX)) {
+    const [all, id, from, to] = m;
+    out += esc(s.slice(last, m.index)); last = m.index + all.length;
+    const d = state(id), kind = from && to ? "rep" : to ? "add" : "del";
+    let body;
+    if (d === "accept") body = to ? `<span class="fin">${esc(to)}</span>` : "";
+    else if (d === "reject") body = from ? `<span class="fin">${esc(from)}</span>` : `<span class="ph">${emptyLabel}</span>`;
+    else body = (from ? `<del>${esc(from)}</del>` : "") + (to ? `<ins>${esc(to)}</ins>` : "");
+    const tip = D.why[id] || "my words: accept to keep, or write your own";
+    out += `<span class="ed ${kind} ${d}" data-id="${id}" tabindex="0" role="button" title="${esc(tip)}" aria-label="Suggestion ${num(id)}, ${d}">${body}<sup>${num(id)}</sup></span>`;
+  }
+  return out + esc(s.slice(last));
+}
+
+// ── pictures and films ──
+function mediaItem(m, p) {
+  if (m.video) {
+    return `<figure><video src="assets/video/${m.video}.mp4" poster="assets/video/${m.video}.jpg" muted loop playsinline preload="none" controls aria-label="${esc(p.name)}: ${m.video.replace("-", " ")}"></video></figure>`;
+  }
+  const [f, cap] = Array.isArray(m) ? m : [m, ""];
+  const gif = /\.gif$/i.test(f);
+  const [w, h] = (window.THUMBS || {})[f] || [480, 300];
+  const src = gif ? D.asset(f) : "assets/thumbs/" + f.replace(/\.[^.]+$/, ".jpg");
+  return `<figure><a href="${D.asset(f)}" target="_blank" rel="noopener"><img src="${src}" width="${w}" height="${h}" alt="${esc(p.name)}" loading="lazy"${gif || p.pixel ? ' class="pixel"' : ""}></a>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ""}</figure>`;
+}
+
+function entryHTML(p) {
+  const href = p.live || p.code;
+  const name = href ? `<a href="${href}" target="_blank" rel="noopener">${esc(p.name)}</a>` : esc(p.name);
+  const media = p.media || [];
+  const solo = media.length === 1;
+  const txt = `<div class="txt"><p><b class="n">${name}.</b> ${marked(p.what)}</p>
+    ${p.numbers ? `<span class="nums">${marked(p.numbers)}</span>` : ""}
+    ${p.note ? `<span class="note">${esc(p.note)}</span>` : ""}
+    <span class="meta">built ${month(p.when)}${p.model ? ` · with ${esc(p.model)}` : ""}</span></div>`;
+  const pics = solo ? `<div class="media">${mediaItem(media[0], p)}</div>`
+             : media.length ? `<div class="strip" style="--n:${Math.min(3, media.length)};--ar:${p.ar || "16/10"}">${media.map(m => mediaItem(m, p)).join("")}</div>` : "";
+  const kids = p.kids?.length ? `<div class="kids">${p.kids.map(entryHTML).join("")}</div>` : "";
+  return `<div class="entry${solo ? " solo" : ""}" id="e-${p.slug}" data-slug="${p.slug}">${txt}${pics}</div>${kids}`;
+}
+function repoHTML(r) {
+  return `<li class="entry" id="e-${r.slug}" data-slug="${r.slug}"><a class="rn" href="${r.code}" target="_blank" rel="noopener">${esc(r.name)}</a><span class="rw">${month(r.when)}</span>${r.see ? `<a class="see" href="#e-${r.see}">↑ above</a>` : ""}<span class="line">${marked(r.what)}</span></li>`;
+}
+// a group whose name I suggested and you turned down is shown ungrouped
+const ungrouped = g => D.ids(g.name).some(id => state(id) === "reject") && !g.name.replace(D.RX, "").trim();
+function groupHTML(g) {
+  if (preview && ungrouped(g)) return g.items.map(entryHTML).join("");
+  return `<div class="group" id="g-${g.slug}"><h3>${marked(g.name, "[ no group ]")}</h3>${g.what ? `<p class="gdesc">${marked(g.what)}</p>` : ""}<div class="gbody">${g.items.map(entryHTML).join("")}</div></div>`;
+}
+function sectionHTML(s) {
+  const body = s.list ? `<ul class="repos">${s.items.map(repoHTML).join("")}</ul>`
+             : s.items.map(it => it.group ? groupHTML(it) : entryHTML(it)).join("");
+  return `<section id="s-${s.id}"><h2 class="sec">${esc(s.name)}</h2>${body}</section>`;
+}
+function erasHTML() {
+  return `<div class="title">${esc(D.claudeTitle)}</div><div class="eralist">` +
+    D.eras.map((e, i) => `<div class="era" data-era="${i}"><b>${marked(e.label)}</b><span class="t">${e.text.map(t => marked(t)).join(" ")}</span></div>`).join("") + `</div>`;
+}
+function outlineHTML() {
+  let h = "";
+  const link = (p, depth) => `<a href="#e-${p.slug}" data-slug="${p.slug}" class="d${depth}"><span>${esc(p.name)}</span><span class="w">${mon(p.when)}</span></a>`;
+  const visit = (it, depth) => {
+    if (it.group) {
+      const show = !(preview && ungrouped(it));
+      if (show) h += `<div class="gh">${esc(D.text(it.name, "suggested", dec)) || "group"}</div>`;
+      it.items.forEach(x => visit(x, show ? depth + 1 : depth));
+      return;
+    }
+    h += link(it, depth);
+    (it.kids || []).forEach(k => visit(k, depth + 1));
+  };
+  D.sections.forEach(s => { h += `<div class="sh" data-sec="${s.id}">${esc(s.name)}</div>`; s.items.forEach(it => visit(it, 0)); });
+  return h;
+}
+
+const ALL = D.walk();
+const ERA_OF = p => p.repo ? -1 : D.eras.findIndex(e => e.models.includes(p.model));
+
+function render() {
+  $("head").innerHTML = `<h1>${esc(D.top.hi)}</h1><p class="about">${marked(D.top.about)}</p><p>${marked(D.top.intro)}</p>`;
+  $("eras").innerHTML = erasHTML();
+  $("erasM").innerHTML = erasHTML();
+  $("work").innerHTML = D.sections.map(sectionHTML).join("");
+  $("ol").innerHTML = outlineHTML();
+  document.body.classList.toggle("preview", preview);
+  const acc = ORDER.filter(id => state(id) === "accept").length, rej = ORDER.filter(id => state(id) === "reject").length;
+  $("cnt").textContent = `${ORDER.length - acc - rej} open · ${acc} accepted · ${rej} yours`;
+  $("prev").textContent = preview ? "Back to red" : "Preview";
+  watchVideos();
+  active = undefined; track();
+}
+
+// ── follow the scroll: outline, section, and the era each build belongs to ──
+let active;
+function track() {
+  const entries = document.querySelectorAll(".entry"), line = innerHeight * 0.3;
+  let cur = null;
+  if (scrollY > 120) for (const e of entries) { if (e.getBoundingClientRect().top <= line) cur = e; else break; }
+  const slug = cur?.dataset.slug || null;
+  if (slug === active) return;
+  active = slug;
+  const p = ALL.find(x => x.slug === slug);
+  document.querySelectorAll(".ol a").forEach(a => a.classList.toggle("on", a.dataset.slug === slug));
+  document.querySelectorAll(".ol .sh").forEach(h => h.classList.toggle("on", !!p && h.dataset.sec === p.sec.id));
+  const era = p ? ERA_OF(p) : -1;
+  document.querySelectorAll(".eras").forEach(box => {
+    box.classList.toggle("tracking", era >= 0);
+    box.querySelectorAll(".era").forEach(e => e.classList.toggle("on", +e.dataset.era === era));
+  });
+  const ol = $("ol"), a = ol.querySelector("a.on");
+  if (a && (a.offsetTop < ol.scrollTop + 30 || a.offsetTop > ol.scrollTop + ol.clientHeight - 60)) ol.scrollTop = a.offsetTop - ol.clientHeight / 3;
+  const nb = $("nowbar");
+  nb.classList.toggle("show", !!p);
+  if (p) nb.innerHTML = `${esc(p.sec.name)} · ${month(p.when)} · <b>${esc(p.name)}</b>${p.model ? ` · ${esc(p.model)}` : ""}`;
+}
+addEventListener("scroll", () => requestAnimationFrame(track), {passive: true});
+addEventListener("resize", () => { active = undefined; track(); });
+
+// films play silently while on screen; the controls turn the sound on
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let vio;
+function watchVideos() {
+  vio?.disconnect();
+  if (calm || !("IntersectionObserver" in window)) return;
+  vio = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+  }), {threshold: .5});
+  document.querySelectorAll("video").forEach(v => vio.observe(v));
+}
+
+// ── review: click red to accept, again to keep yours, again to undo ──
+function cycle(id) {
+  const next = {pending: "accept", accept: "reject", reject: "pending"}[state(id)];
+  if (next === "pending") delete dec[id]; else dec[id] = next;
+  D.save(dec); render();
+}
+document.addEventListener("click", e => { const ed = e.target.closest(".ed"); if (ed && !preview) { e.preventDefault(); cycle(ed.dataset.id); } });
+document.addEventListener("keydown", e => { const ed = e.target.closest?.(".ed"); if (ed && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); cycle(ed.dataset.id); } });
+$("all").onclick = () => { ORDER.forEach(id => { if (state(id) !== "reject") dec[id] = "accept"; }); D.save(dec); render(); };
+$("reset").onclick = () => { dec = {}; D.save(dec); render(); };
+$("prev").onclick = () => { preview = !preview; render(); };
+$("min").onclick = () => { $("review").classList.toggle("min"); $("min").textContent = $("review").classList.contains("min") ? "+" : "–"; };
+const ranges = ns => ns.sort((a, b) => a - b).reduce((out, n) => {
+  const last = out[out.length - 1];
+  if (last && n === last[1] + 1) last[1] = n; else out.push([n, n]);
+  return out;
+}, []).map(([a, b]) => a === b ? `${a}` : `${a}–${b}`).join(", ") || "none";
+$("copy").onclick = async () => {
+  const pick = k => ORDER.filter(id => state(id) === k).map(num);
+  const txt = `accepted: ${ranges(pick("accept"))}\nkeep mine: ${ranges(pick("reject"))}\nstill open: ${ranges(pick("pending"))}`;
+  const out = $("out"); out.value = txt; out.classList.add("show");
+  try { await navigator.clipboard.writeText(txt); out.value = txt + "\n(copied)"; } catch { out.select(); }
+};
+addEventListener("storage", e => { if (e.key === D.KEY) { dec = D.decisions(); render(); } });
+
+// wide screens: dock the review box under the outline; otherwise it floats, collapsed, at the bottom
+const wide = matchMedia("(min-width:1180px)");
+function dock() {
+  const r = $("review");
+  if (wide.matches) { $("sidestick").appendChild(r); r.classList.add("docked"); r.classList.remove("min"); $("min").textContent = "–"; }
+  else { document.body.appendChild(r); r.classList.remove("docked"); r.classList.add("min"); $("min").textContent = "+"; }
+}
+wide.addEventListener("change", dock); dock();
+
+render();
+</script>
+</body>
+</html>
