@@ -8,7 +8,7 @@
 (function () {
   const top = {
     hi: "hi. i'm pranav",
-    about: "friendly, ambitious nerd. spend a lot of time exploring my curiosity, and it's led me down a lot of interesting roads. with ai, i've been able to do this at a scale and speed i never thought possible.",
+    about: "friendly, ambitious nerd. spend a lot of time exploring my curiosity, and it's led me down a lot of interesting roads.",
     intro: "i have been spending a lot of my time speaking to and experimenting with llms this year. this is a compilation of projects i've built, with the help of claude.",
   };
 
