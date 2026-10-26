@@ -12,7 +12,7 @@
     intro: "this past year, i've been experimenting with llms quite a lot. this is a compilation of projects i've built together with claude.",
   };
 
-  const claudeTitle = "on my relationship with claude:";
+  const claudeTitle = "the journey";
   // models: which builds belong to each era (drives the highlight as you scroll)
   const eras = [
     {label: "2022-2025 · chatgpt · o1 and o3", models: [],

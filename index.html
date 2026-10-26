@@ -17,7 +17,10 @@ a,a:visited{color:var(--link)}
 
 /* left: the claude story */
 .eras{position:sticky;top:28px;max-height:calc(100vh - 56px);overflow:auto;scrollbar-width:thin;padding-right:4px}
-.eras .title{font-size:13px;color:var(--ink);margin:2px 0 14px}
+.eras .title{all:unset;cursor:pointer;display:block;font-size:13px;color:var(--ink);margin:2px 0 14px}
+.eras .title:hover{color:var(--link)}
+.eras .title:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.eras:not(.open) .eralist{display:none}  /* the journey stays folded until opened */
 .eralist{border-left:2px solid var(--line);padding-left:16px}
 .era{position:relative;margin:0 0 18px;font-size:13px;transition:opacity .25s}
 .era::before{content:"";position:absolute;left:-22px;top:5px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--dot);transition:background .25s,border-color .25s}
@@ -124,7 +127,7 @@ footer{margin-top:3.5em;padding-top:1em;border-top:1px solid var(--rule);font-si
 @media (max-width:899px){
   .page{grid-template-columns:minmax(0,1fr);max-width:640px;margin:0 auto;padding-top:28px}
   .gutter{display:none}
-  .eras-m{display:block;margin:1.4em 0 0}
+  .eras-m{display:none}  /* phones skip the journey and go straight to built */
   .eras-m .eras{position:static;max-height:none;overflow:visible}
 }
 @media (max-width:560px){
@@ -138,7 +141,7 @@ footer{margin-top:3.5em;padding-top:1em;border-top:1px solid var(--rule);font-si
 </head>
 <body>
 <div class="page" id="top">
-  <aside class="gutter" aria-label="On my relationship with claude"><div class="eras" id="eras"></div></aside>
+  <aside class="gutter" aria-label="The journey"><div class="eras" id="eras"></div></aside>
   <main>
     <nav class="menu-m" aria-label="Site"><a href="#top">about</a><a href="#work">work</a><a href="#contact">contact</a></nav>
     <div id="head"></div>
@@ -169,8 +172,8 @@ footer{margin-top:3.5em;padding-top:1em;border-top:1px solid var(--rule);font-si
   </div>
 </div>
 
-<script src="writing/draft.js?v=63d9cbcb"></script>
-<script src="assets/thumbs/sizes.js?v=63d9cbcb"></script>
+<script src="writing/draft.js?v=665b9fed"></script>
+<script src="assets/thumbs/sizes.js?v=665b9fed"></script>
 <script>
 const D = DRAFT, {esc} = D, $ = id => document.getElementById(id);
 let dec = D.decisions(), preview = false;
@@ -248,8 +251,9 @@ function sectionHTML(s) {
              : s.items.map(it => it.group ? groupHTML(it) : entryHTML(it)).join("");
   return `<section id="s-${s.id}"><h2 class="sec">${esc(s.name)}</h2>${body}</section>`;
 }
+let journeyOpen = false;
 function erasHTML() {
-  return `<div class="title">${esc(D.claudeTitle)}</div><div class="eralist">` +
+  return `<button class="title" aria-expanded="${journeyOpen}">${journeyOpen ? "▾" : "▸"} ${esc(D.claudeTitle)}</button><div class="eralist">` +
     D.eras.map((e, i) => `<div class="era" data-era="${i}"><b>${marked(e.label)}</b><span class="t">${e.text.map(t => marked(t)).join(" ")}</span></div>`).join("") + `</div>`;
 }
 function outlineHTML() {
@@ -275,6 +279,7 @@ const ERA_OF = p => p.repo ? -1 : D.eras.findIndex(e => e.models.includes(p.mode
 function render() {
   $("head").innerHTML = `<h1>${esc(D.top.hi)}</h1><p class="about">${marked(D.top.about)}</p><p>${marked(D.top.intro)}</p>`;
   $("eras").innerHTML = erasHTML();
+  $("eras").classList.toggle("open", journeyOpen);
   $("erasM").innerHTML = erasHTML();
   $("work").innerHTML = D.sections.map(sectionHTML).join("");
   $("ol").innerHTML = outlineHTML();
@@ -332,6 +337,7 @@ function cycle(id) {
   D.save(dec); render();
 }
 document.addEventListener("click", e => { const ed = e.target.closest(".ed"); if (ed && !preview) { e.preventDefault(); cycle(ed.dataset.id); } });
+document.addEventListener("click", e => { if (e.target.closest(".eras .title")) { journeyOpen = !journeyOpen; render(); } });
 document.addEventListener("keydown", e => { const ed = e.target.closest?.(".ed"); if (ed && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); cycle(ed.dataset.id); } });
 $("all").onclick = () => { ORDER.forEach(id => { if (state(id) !== "reject") dec[id] = "accept"; }); D.save(dec); render(); };
 $("reset").onclick = () => { dec = {}; D.save(dec); render(); };
